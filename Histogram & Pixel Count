@@ -1,0 +1,19 @@
+#create histogram
+from rasterio.plot import show_hist
+show_hist(ndvi, bins=50, lw=0.0, stacked=False, alpha=0.3,
+ histtype='stepfilled', title="Histogram")
+
+#Pixel count
+import numpy as np
+import gdal
+# Your input NDVI data 
+tif = r'F:\IGIS\Lahoreee\ndviImage5.tif' 
+# Open the tif in GDAL and convert to a numpy array
+raster1 = gdal.Open(tif)
+array = np.array(raster1.GetRasterBand(1).ReadAsArray())
+# Get a count of pixels meeting your conditions
+count = np.count_nonzero((0.3 <= array) & (array >= 0.6))
+# Report the results
+print(f'There are {count} pixels with values from 0.3 to 0.6')
+
+#You can calculate multiple ndvi by this method to do time-series analysis; and subtract Images to visualize the change
